@@ -3,14 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import sampleBlogs from "../data/sampleBlogsData"; 
 
-
 const BlogDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const blog = sampleBlogs.find((b) => b.id === id);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  // Load bookmark state from localStorage
   useEffect(() => {
     const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
     setIsBookmarked(bookmarks.includes(id));
@@ -35,13 +33,12 @@ const BlogDetails = () => {
   }
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
-      {/* FIX IS HERE: Use backticks for the URL string */}
+    <div className="p-4 md:p-8 max-w-2xl mx-auto">
+      {/* Responsive Image */}
       <div
-        className="w-[800px] h-[500px] bg-cover bg-center relative rounded-lg shadow-lg"
-        style={{ backgroundImage: `url('/${blog.imageUrl}')` }} 
-      >
-      </div>
+        className="w-full h-64 md:h-[500px] bg-cover bg-center rounded-lg shadow-lg mb-6"
+        style={{ backgroundImage: `url('/${blog.imageUrl}')` }}
+      ></div>
 
       <h1 className="text-3xl font-bold mb-2">{blog.title}</h1>
       <div className="text-gray-600 mb-4">
@@ -53,7 +50,8 @@ const BlogDetails = () => {
         )}
       </div>
       <div className="mb-6 text-gray-800">{blog.content}</div>
-      <div className="flex gap-2">
+
+      <div className="flex flex-wrap gap-2">
         <Link
           to={`/edit/${blog.id}`}
           className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700 transition"
